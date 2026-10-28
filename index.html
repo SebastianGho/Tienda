@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selitech | Catálogo Oficial de Tecnología</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles-extra.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <a href="#" class="brand-logo">
+                <div class="logo-icon"><div class="logo-inner">S</div></div>
+                <div class="logo-text">SELI<span>TECH</span></div>
+            </a>
+            <div class="search-bar">
+                <svg class="search-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                <input type="text" id="searchInput" placeholder="Buscar por referencia o nombre...">
+            </div>
+            <div class="header-actions">
+                <button class="btn-ghost" id="btnUser">Ingresar</button>
+                <button class="btn-ghost" id="btnCart">🛒 <span id="cartCount" class="cart-badge">0</span></button>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-container">
+            <div class="badge"><span>Catálogo de Productos 2026</span></div>
+            <h1 class="hero-title">Accesorios & Tecnología <br><span class="text-gradient">De Alto Rendimiento</span></h1>
+            <p class="hero-subtitle">Explora toda nuestra línea de audífonos, cargadores de carga rápida, cables reforzados y multiplicadores con garantía Selitech.</p>
+        </div>
+    </section>
+
+    <main class="catalog-section">
+        <div class="catalog-header">
+            <div><span class="section-subtitle">Productos Disponibles</span><h2 class="section-title">Catálogo Completo</h2></div>
+            <span class="counter-text" id="counterText"></span>
+        </div>
+        <div class="filter-bar">
+            <button class="filter-btn active" data-category="todos">Todos</button>
+            <button class="filter-btn" data-category="audifonos">Audífonos</button>
+            <button class="filter-btn" data-category="gafas">Gafas</button>
+            <button class="filter-btn" data-category="multiplicador">Multiplicadores</button>
+            <button class="filter-btn" data-category="cargadores">Cargadores</button>
+            <button class="filter-btn" data-category="cables">Cables</button>
+        </div>
+        <div class="product-grid" id="productGrid"></div>
+    </main>
+
+    <!-- DETALLE DE PRODUCTO -->
+    <div class="modal-overlay" id="productModal">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <div class="modal-img-box"><img id="modalImage" src="" alt="Producto"></div>
+            <div class="modal-info-box">
+                <div>
+                    <span class="card-ref" id="modalRef"></span>
+                    <h3 class="modal-title" id="modalTitle"></h3>
+                    <table class="spec-table" id="modalSpecs"></table>
+                </div>
+                <div class="modal-footer">
+                    <span class="card-price" id="modalPrice"></span>
+                    <div class="modal-btns">
+                        <button class="btn-wsp" id="modalAdd">Agregar</button>
+                        <a href="#" id="modalWspBtn" target="_blank" class="btn-ghost">WhatsApp</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOGIN / REGISTRO -->
+    <div class="modal-overlay" id="authModal">
+        <div class="modal-content panel">
+            <button class="modal-close">&times;</button>
+            <h3 class="modal-title" id="authTitle"></h3>
+            <form id="authForm" class="form">
+                <input name="nombre" id="authName" placeholder="Nombre completo">
+                <input name="email" type="email" placeholder="Correo electrónico" required>
+                <input name="password" type="password" placeholder="Contraseña (mín. 6)" minlength="6" required>
+                <p class="form-error" id="authError"></p>
+                <button class="btn-wsp" id="authSubmit" type="submit"></button>
+                <button class="btn-ghost" id="googleBtn" type="button">Continuar con Google</button>
+                <button class="link-btn" id="authSwitch" type="button"></button>
+            </form>
+        </div>
+    </div>
+
+    <!-- CARRITO + DATOS DE ENVÍO -->
+    <div class="modal-overlay" id="cartModal">
+        <div class="modal-content panel">
+            <button class="modal-close">&times;</button>
+            <div id="stepCart">
+                <h3 class="modal-title">Tu carrito</h3>
+                <div id="cartItems"></div>
+                <div class="cart-total"><span>Total</span><b id="cartTotal">$ 0</b></div>
+                <small class="muted">El costo de envío se confirma por WhatsApp.</small>
+                <button class="btn-wsp full" id="btnCheckout">Continuar al pago</button>
+            </div>
+            <div id="stepCheckout" hidden>
+                <h3 class="modal-title">Datos de envío</h3>
+                <form id="checkoutForm" class="form">
+                    <input name="nombre" placeholder="Nombre completo" required>
+                    <input name="telefono" type="tel" placeholder="Teléfono / WhatsApp" required pattern="[0-9+ ]{7,15}">
+                    <div class="row2">
+                        <input name="departamento" placeholder="Departamento" required>
+                        <input name="ciudad" placeholder="Ciudad" required>
+                    </div>
+                    <input name="direccion" placeholder="Dirección (calle, barrio, apto)" required>
+                    <input name="notas" placeholder="Indicaciones adicionales (opcional)">
+                    <button class="btn-wsp full" id="btnPay" type="submit">Pagar con Wompi</button>
+                    <button class="link-btn" id="backToCart" type="button">← Volver al carrito</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="logo-text">SELI<span>TECH</span></div>
+            <p class="footer-text">&copy; 2026 Selitech Store. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
